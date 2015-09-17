@@ -30,7 +30,7 @@ app.get('/', (req, res, next) => {
 
 app.post('/', (req, res, next) => {
   todo.addTodoItem(req.body.newtodoitem).then(() => {
-    res.redirect('http://google.com/');
+    res.redirect('/');
   }).catch((err) => {
     next(err);
   });
