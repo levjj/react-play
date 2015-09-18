@@ -21,9 +21,10 @@ export function getAllTodo() {
 }
 
 export function addTodoItem(item) {
-  return ensureListExists().then(() => {
-    return fs.appendFile(tdlist, item + '\n');
-  });
+  return ensureListExists()
+    .then(() => fs.appendFile(tdlist, item + '\n'))
+    .then(() => getAllTodo())
+    .then((all) => all.length - 1);
 }
 
 export function rmTodoItem(index) {

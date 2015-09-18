@@ -8,32 +8,34 @@ This is our controller.
 import express from 'express';
 import hbs from 'express-handlebars';
 import bodyParser from 'body-parser';
-import * as todo from './todo.js';
+import logger from 'morgan';
+import client from 'superagent';
 
 const app = express();
 
 app.engine('hbs', hbs({defaultLayout: 'main', extname: '.hbs'}));
 app.set('view engine', '.hbs');
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(logger('combined'));
 
+const BACKEND = 'http://localhost:3001';
 
 app.get('/', (req, res, next) => {
-  todo.getAllTodo().then( list => {
+  client.get(`${BACKEND}/todos`).then(({body: list}) => {
     res.render('index', {
       title: 'Slick Todo List',
       todo: list
     });
-  }).catch((err) => {
-    next(err);
-  });
+  }, (err) => next(err));
 });
 
 app.post('/', (req, res, next) => {
-  todo.addTodoItem(req.body.newtodoitem).then(() => {
-    res.redirect('/');
-  }).catch((err) => {
-    next(err);
-  });
+  client.post(`${BACKEND}/todos`)
+        .send({newtodoitem: req.body.newtodoitem})
+        .then(() => res.redirect('/'),
+              (err) => next(err));
 });
 
 app.get('/edit', (req, res) => {
