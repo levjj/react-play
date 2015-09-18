@@ -25,7 +25,7 @@ app.get('/todos', (req, res, next) => {
 });
 
 app.post('/todos', (req, res, next) => {
-  todo.addTodoItem(req.body.newtodoitem).then((idx) => {
+  todo.addTodoItem(req.body).then((idx) => {
     res.send({added: idx});
   }).catch((err) => {
     next(err);

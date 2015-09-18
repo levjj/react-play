@@ -1,3 +1,4 @@
 node_modules
 backend/todolist
 npm-debug.log
+frontend/build
