@@ -10,8 +10,7 @@ module.exports = {
   devtool: 'source-map',
   module: {
     loaders: [
-      {test: /\.js$/, loader: 'babel?optional[]=runtime&stage=0'},
-      {test: /\.hbs$/, loader: 'handlebars'}
+      {test: /\.js$/, loader: 'babel?optional[]=runtime&stage=0'}
     ]
   },
   debug: true

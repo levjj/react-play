@@ -1,26 +1,16 @@
-import {Router} from 'backbone';
-import $ from 'jquery';
+import React, {Component} from 'react';
+import {Route, Router} from 'react-router';
+import history from './history';
 
-import IndexView from './views/index';
-import EditView from './views/edit';
+import Index from './components/index';
+import Edit from './components/edit';
 
-export default class MyRouter extends Router {
-  routes() {
-    return {
-      '': 'index',
-      'edit': 'edit'
-    };
-  }
-
-  index() {
-    const view = new IndexView({el: $('#body')});
-    document.title = view.title;
-    view.render();
-  }
-
-  edit() {
-    const view = new EditView({el: $('#body')});
-    document.title = view.title;
-    view.render();
+export default class MyRouter extends Component {
+  render() {
+    return (
+      <Router history={history}>
+        <Route path="/" component={Index}/>
+        <Route path="/edit" component={Edit}/>
+      </Router>);
   }
 }
