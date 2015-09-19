@@ -1,13 +1,21 @@
 import superagent from 'superagent';
 
-function formatUrl(path) {
-  return `/api${path}`;
-}
-
 export default class ApiClient {
+  constructor(isClient) {
+    this.isClient = isClient;
+  }
+
+  formatUrl(path) {
+    if (this.isClient) {
+      return `/api${path}`;
+    } else {
+      return `http://localhost:3001${path}`;
+    }
+  }
+
   get(path) {
     return new Promise((resolve, reject) => {
-      superagent.get(formatUrl(path)).end((err, res) => {
+      superagent.get(this.formatUrl(path)).end((err, res) => {
         if (err) {
           reject(res);
         } else {
@@ -19,7 +27,7 @@ export default class ApiClient {
 
   post(path, options) {
     return new Promise((resolve, reject) => {
-      const request = superagent.post(formatUrl(path));
+      const request = superagent.post(this.formatUrl(path));
       if (options && options.data) {
         request.send(options.data);
       }

@@ -1,2 +1,9 @@
 import createBrowserHistory from 'history/lib/createBrowserHistory';
-export default createBrowserHistory();
+
+let history;
+export default function lazyHistory() {
+  if (!history) {
+    history = createBrowserHistory();
+  }
+  return history;
+}

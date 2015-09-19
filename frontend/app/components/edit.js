@@ -15,16 +15,20 @@ export default class Edit extends Component {
   }
 
   componentDidMount() {
-    document.title = this.title;
+    document.title = this.constructor.title;
   }
 
-  title = 'Edit ToDo List';
+  static title = 'Edit ToDo List';
+
+  static fetchData() {
+    return Promise.resolve();
+  }
 
   submit(evt) {
     evt.preventDefault();
     const el = React.findDOMNode(this.refs.newtodo);
     this.props.dispatch(add({title: el.value}))
-      .then(() => history.replaceState(null, '/'));
+      .then(() => history().replaceState(null, '/'));
   }
 
   render() {

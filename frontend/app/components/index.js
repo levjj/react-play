@@ -15,13 +15,19 @@ export default class Index extends Component {
   }
 
   componentDidMount() {
-    document.title = this.title;
-    if (!this.props.todos) {
-      return this.props.dispatch(list());
-    }
+    document.title = this.constructor.title;
+    const {dispatch, todos} = this.props;
+    this.constructor.fetchData({todos}, dispatch);
   }
 
-  title = 'My Slick ToDo List';
+  static title = 'My Slick ToDo List';
+
+  static fetchData(state, dispatch) {
+    if (!state.todos) {
+      return dispatch(list());
+    }
+    return Promise.resolve();
+  }
 
   render() {
     const {todos, isLoading} = this.props;

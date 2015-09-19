@@ -5,12 +5,15 @@ import history from './history';
 import Index from './components/index';
 import Edit from './components/edit';
 
+export function routes() {
+  return [
+    <Route path="/" component={Index}/>,
+    <Route path="/edit" component={Edit}/>
+  ];
+}
+
 export default class MyRouter extends Component {
   render() {
-    return (
-      <Router history={history}>
-        <Route path="/" component={Index}/>
-        <Route path="/edit" component={Edit}/>
-      </Router>);
+    return (<Router history={history()} children={routes()}/>);
   }
 }
